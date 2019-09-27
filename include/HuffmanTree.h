@@ -17,7 +17,7 @@ public:
     // When bit is 1
     treeChar right();
     //std::string getText(std::bitset<size>);
-    std::bitset<2> compress(std::string);
+    void compress(std::string);
     std::string uncompress(std::bitset<2>);
 private:
     // Ordered by frequency

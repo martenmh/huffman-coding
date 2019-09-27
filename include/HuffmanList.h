@@ -11,7 +11,7 @@ struct treeChar {
     char character;
     unsigned int frequency;
     // traverse by 0 and 1 in the bitset
-    treeChar *nextItems[];
+    treeChar *nextItems[2];
 };
 
 
@@ -20,9 +20,10 @@ public:
     HuffmanList();
     ~HuffmanList();
     void order();
-    treeChar *find(char);
+    // Return the element location if the char exists in the list
+    int find(char);
 private:
-    bool sorter(treeChar const& lhs, treeChar const& rhs);
+    static bool sorter(treeChar &lhs, treeChar &rhs);
 
 };
 

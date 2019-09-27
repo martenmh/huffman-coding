@@ -17,11 +17,18 @@
 
 #include "HuffmanTree.h"
 #include "HuffmanList.h"
+#include <fstream>
+#include <string>
 
+int main(int argc, char **argv) {
+    // TODO: RAII class
+    std::ifstream myfile;
 
-int main() {
-    HuffmanList list;
+    myfile.open (argv[1]);
 
-    std::cout << "Hello, World!" << std::endl;
+    std::string str((std::istreambuf_iterator<char>(myfile)),
+                    std::istreambuf_iterator<char>());
+    myfile.close();
+    HuffmanTree tree = HuffmanTree(str);
     return 0;
 }
