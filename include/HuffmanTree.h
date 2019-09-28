@@ -19,6 +19,7 @@ public:
     //std::string getText(std::bitset<size>);
     void compress(std::string);
     std::string uncompress(std::bitset<2>);
+    // Prints out the tree in the shape of a... tree
 private:
     // Ordered by frequency
     HuffmanList itemList;

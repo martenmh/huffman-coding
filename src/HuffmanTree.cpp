@@ -71,7 +71,7 @@ void HuffmanTree::compress(std::string text) {
             itemList.at(i - 1).leftItem,
             itemList.at(i - 1).rightItem
         });
-        
+
         // Point to the last 2 items of the list and sum their frequency
         treeChar *sum = new treeChar;
         sum->leftItem = left;
@@ -84,22 +84,15 @@ void HuffmanTree::compress(std::string text) {
         itemList.erase(itemList.end()-2, itemList.end());
         i -= 2;
 
-        // loop back and insert the new sum at the right position (ordered by frequency)
-        for(int ii = i; ii > 0; --ii){
-
-            // TODO: Check if itemList insert is at the right position (itemList.end() - i)
-            if(itemList.at(ii).frequency >= sum->frequency){
-                itemList.insert(itemList.end() - ii, *sum);
-                ++i;
-                break;
-            }
-        }
-
-        std::cout << itemList.size() << std::endl;
-
+        // Insert the itemList and order the list
+        itemList.push_back(*sum);
+        itemList.order();
+        i++;
     }
+
 
     std::cout << "h" << std::endl;
     //return std::bitset<2>{true, false};
 
 }
+
