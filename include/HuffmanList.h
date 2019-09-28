@@ -11,7 +11,8 @@ struct treeChar {
     char character;
     unsigned int frequency;
     // traverse by 0 and 1 in the bitset
-    treeChar *nextItems[2];
+    treeChar *leftItem;
+    treeChar *rightItem;
 };
 
 

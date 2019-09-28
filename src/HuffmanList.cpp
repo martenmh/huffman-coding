@@ -21,7 +21,7 @@ int HuffmanList::find(char c) {
         if(this->at(i).character == c)
             return i;
     }
-    return 0;
+    return -1;
 }
 
 bool HuffmanList::sorter(treeChar &lhs, treeChar &rhs) {
