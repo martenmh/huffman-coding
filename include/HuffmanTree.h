@@ -5,6 +5,16 @@
 #ifndef HUFFMAN_HUFFMANTREE_H
 #define HUFFMAN_HUFFMANTREE_H
 
+struct nodeReturn{
+    std::vector<bool> bitset;
+    bool found;
+};
+
+struct tableReturn{
+    std::vector<bool> bitset;
+    char c;
+};
+
 
 class HuffmanTree {
 public:
@@ -16,14 +26,20 @@ public:
     treeChar left();
     // When bit is 1
     treeChar right();
+    // Variable bitset (for initialization at runtime) as is necessary for each character in the tree
+    std::vector<bool> find(char);
     //std::string getText(std::bitset<size>);
     void compress(std::string);
     std::string uncompress(std::bitset<2>);
     // Prints out the tree in the shape of a... tree
+
 private:
+    std::vector<tableReturn> lookupTable;
+    void createLookupTable(treeChar*, std::vector<bool>*);
+
     // Ordered by frequency
     HuffmanList itemList;
-    int size;
+    std::vector<bool> compressedText;
 };
 
 

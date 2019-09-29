@@ -89,10 +89,50 @@ void HuffmanTree::compress(std::string text) {
         itemList.order();
         i++;
     }
+    std::vector<bool> bitset;
+    createLookupTable(&itemList[0], &bitset);
+    for(auto c : text){
+        std::vector<bool> b = find(c);
+        compressedText.insert(compressedText.end(), b.begin(), b.end());
+    }
 
-
-    std::cout << "h" << std::endl;
-    //return std::bitset<2>{true, false};
-
+    for(auto b : compressedText){
+        std::cout << b;
+    }
+    std::cout << '\n' << compressedText.size() << std::endl;
+    std::cout << text.length() << std::endl;
+    for(auto b : lookupTable){
+        std::cout << b.c << " : ";
+        for(auto c : b.bitset){
+            std::cout << c;
+        }
+        std::cout << std::endl;
+    }
 }
 
+std::vector<bool> HuffmanTree::find(char c) {
+    for(const auto node : lookupTable) {
+        if(node.c == c)
+            return node.bitset;
+    }
+    return std::vector<bool>(false);
+}
+
+// Traverse the entire tree and insert each found character with the accompanying bitset, which creates a lookupTable.
+void HuffmanTree::createLookupTable(treeChar *pt, std::vector<bool> *curBitset) {
+    if(pt->character != '\0') {
+        lookupTable.push_back({*curBitset, pt->character});
+    }
+    else {
+        if(pt->leftItem) {
+            curBitset->push_back(false);
+            createLookupTable(pt->leftItem, curBitset);
+        }
+        if(pt->rightItem){
+            curBitset->push_back(true);
+            createLookupTable(pt->rightItem, curBitset);
+    }
+}
+
+
+}
