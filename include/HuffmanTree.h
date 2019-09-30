@@ -30,16 +30,20 @@ public:
     std::vector<bool> find(char);
     //std::string getText(std::bitset<size>);
     void compress(std::string);
-    std::string uncompress(std::bitset<2>);
+    std::string uncompress(std::vector<bool> bitset);
     // Prints out the tree in the shape of a... tree
 
 private:
     std::vector<tableReturn> lookupTable;
-    void createLookupTable(treeChar*, std::vector<bool>*);
-
+    // Recursive functions
+    void createLookupTable(treeChar*, std::vector<bool>);
+    char readTree(treeChar *pt, std::vector<bool> *bitset);
     // Ordered by frequency
     HuffmanList itemList;
     std::vector<bool> compressedText;
+
+
+
 };
 
 
