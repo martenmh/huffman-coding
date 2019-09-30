@@ -8,9 +8,7 @@
 HuffmanList::HuffmanList(): std::vector<treeChar>{}{
 }
 
-HuffmanList::~HuffmanList(){
-
-}
+HuffmanList::~HuffmanList()= default;
 
 void HuffmanList::order() {
     std::sort(this->begin(), this->end(), sorter);

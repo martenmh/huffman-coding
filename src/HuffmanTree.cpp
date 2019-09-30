@@ -5,6 +5,8 @@
 #include <iostream>
 #include "../include/HuffmanTree.h"
 #include "HuffmanList.h"
+// For to_ulong && to_string
+#include <bitset>
 
 HuffmanTree::HuffmanTree(std::string text) {
     compress(text);
@@ -15,7 +17,6 @@ HuffmanTree::HuffmanTree(char ** text) {
 }
 
 HuffmanTree::~HuffmanTree() = default;
-
 
 void HuffmanTree::compress(std::string text) {
     // ... insert items in list
@@ -66,12 +67,11 @@ void HuffmanTree::compress(std::string text) {
         // Remove the last 2 items from the list as they are now pointed to by the sum
         // TODO: check if this erases the right items
         itemList.erase(itemList.end()-2, itemList.end());
-        i -= 2;
 
         // Insert the itemList and order the list
         itemList.push_back(*sum);
         itemList.order();
-        i++;
+        i--;
     }
     std::vector<bool> leftBitset = {false};
     std::vector<bool> rightBitset = {true};
@@ -100,9 +100,7 @@ void HuffmanTree::compress(std::string text) {
         std::cout << std::endl;
     }
 
-
     std::cout << uncompress(compressedText) << std::endl;
-
 }
 
 std::vector<bool> HuffmanTree::find(char c) {
@@ -134,16 +132,14 @@ std::string HuffmanTree::uncompress(std::vector<bool> bitset) {
     while(bitset.size() != 0)
         output.push_back( readTree(&itemList[0], &bitset));
 
-
     return output;
 }
 
 char HuffmanTree::readTree(treeChar *pt, std::vector<bool> *bitset) {
-
-
     if(pt->character != '\0'){
         return pt->character;
     }
+
     bool bit = bitset->at(0);
     bitset->erase(bitset->begin());
 
@@ -151,5 +147,46 @@ char HuffmanTree::readTree(treeChar *pt, std::vector<bool> *bitset) {
         return readTree(pt->leftItem, bitset);
     } else {
         return readTree(pt->rightItem, bitset);
+    }
+}
+
+std::vector<bool> HuffmanTree::saveTree() {
+    std::vector<bool> bitset;
+    createSavedTree(&itemList[0], &bitset);
+    return bitset;
+}
+
+void HuffmanTree::loadTree(std::vector<bool> * bitset) {
+    loadSavedTree(bitset);
+}
+
+void HuffmanTree::createSavedTree(treeChar *pt, std::vector<bool>* bitset){
+    // If it is a leaf node: Output 1-bit + N-bit character/byte
+    if(pt->character != '\0') {
+        bitset->push_back(true);
+        std::vector<bool> tempBitset;
+
+        for(int i = 0; i < 8; i++) {
+            tempBitset.push_back((pt->character >> i) & 1);
+        }
+        // push tempBitset to the back of bitset.
+        bitset->insert(bitset->end(), tempBitset.begin(), tempBitset.end());
+
+    } else {
+        // If not leaf-node, output 0-bit. Then encode both child nodes (first left then right)
+        bitset->push_back(false);
+        createSavedTree(pt->leftItem, bitset);
+        createSavedTree(pt->rightItem, bitset);
+    }
+}
+void HuffmanTree::loadSavedTree(std::vector<bool>* bitset){
+    bool bit = bitset->at(0);
+    bitset->erase(bitset->begin());
+    // If it is not a leaf-node:
+    if(bit == false){
+        loadSavedTree(bitset);
+    }
+    else{
+        
     }
 }

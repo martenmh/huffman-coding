@@ -7,7 +7,7 @@
 #include <vector>
 
 struct treeChar {
-    // character can be empty, than it is a sum with 2 pointers
+    // character can be empty, then it is a sum with 2 pointers
     char character;
     unsigned int frequency;
     // traverse by 0 and 1 in the bitset
@@ -15,7 +15,7 @@ struct treeChar {
     treeChar *rightItem;
 };
 
-
+// Extends std::vector with an order and find method
 class HuffmanList : public std::vector<treeChar> {
 public:
     HuffmanList();
